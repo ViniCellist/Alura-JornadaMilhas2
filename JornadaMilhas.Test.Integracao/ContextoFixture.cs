@@ -4,6 +4,7 @@ using JornadaMilhasV1.Modelos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Formats.Asn1;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,6 +47,16 @@ namespace JornadaMilhas.Test.Integracao
             var lista = fakerOferta.Generate(200);
             Context.OfertasViagem.AddRange(lista);
             Context.SaveChanges();
+        }
+
+        public async Task LimpaDadosDoBanco()
+        {
+            //Context.OfertasViagem.RemoveRange(Context.OfertasViagem);
+            //Context.Rotas.RemoveRange(Context.Rotas);
+            //await Context.SaveChangesAsync();
+
+            Context.Database.ExecuteSqlRaw("DELETE FROM OfertasViagem");
+            Context.Database.ExecuteSqlRaw("DELETE FROM Rotas");
         }
 
         public async Task DisposeAsync()
